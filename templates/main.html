@@ -15,6 +15,9 @@
     <main class="mdl-layout__content">
         <div class="start">
           <h1 class="starttext" id="welcome">SMRITI</h1><br>
+          <!-- y'all we need to send them to the login page BEFORE we send them anywhere else
+          otherwise our code will throw errors
+          that's why our login was having trouble :D (thank goodness it wasn't anything worse...) -->
           <form action = "/prefs">
             <input type="text" name="isbn" placeholder="Type in the ISBN of a book" id="isbn">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="buy">I'm buying!</button>

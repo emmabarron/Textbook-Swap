@@ -60,7 +60,7 @@ class GreetingsPage(webapp2.RequestHandler):
 
 class LoginPage(webapp2.RequestHandler):
     def get(self):
-        login_template = jinja_env.get_template('templates/login-page.html')
+        login_template = jinja_env.get_template('templates/login.html')
         login_dict = {}
         user = users.get_current_user()
 
@@ -70,7 +70,7 @@ class LoginPage(webapp2.RequestHandler):
             email_address = user.nickname()
             # uses User (model obj) method to get the user's Google ID.
             # hopefully it returns something...
-            our_site_user = User.get_by_id(user.user_id())
+            our_site_user = UserInfo.get_by_id(user.user_id())
             #dictionary - this gives the sign-out link
             signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
             signout_link = users.create_logout_url('/')
@@ -128,10 +128,11 @@ class SellPage(webapp2.RequestHandler):
 
         # THIS CODE IS THROWING ERROS
         # WHEN TESTING, CURRENT_USER IS NOT INSTANTIATED
-        # WE NEED TO MAKE OBJECTS IN THE DATASTORE?
-        # current_user = get_logged_in_user(self)
-        # sell_page_dict['selling'] = current_user.selling
-        # sell_page_dict['sold'] = current_user.sold
+        # Because the user is not logged in... to the google database OOF
+        # fixed, just need a button that redirects to the login page!
+        current_user = get_logged_in_user(self)
+        sell_page_dict['selling'] = current_user.selling
+        sell_page_dict['sold'] = current_user.sold
 
         self.response.write(sell_template.render(sell_page_dict))
 
