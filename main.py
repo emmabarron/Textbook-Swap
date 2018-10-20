@@ -32,7 +32,7 @@ def get_logged_in_user(request_handler):
             'log_in_url' : users.create_login_url('/')
         }
         # put that Google log-in link on the page and get them in!
-        log_in_template = jinja_env.get_template('templates/login-page.html')
+        log_in_template = jinja_env.get_template('templates/login.html')
         request_handler.response.write(log_in_template.render(dict))
         print 'transaction halted because user is not logged in'
         return None
@@ -121,15 +121,17 @@ class LoginPage(webapp2.RequestHandler):
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
+        sell_page_dict = {}
         
         # show current books the user is currently trying to sell
         # also shows what the user has sold
-        current_user = get_logged_in_user(self)
-        sell_page_dict = {}
-        if current_user.selling:
-            sell_page_dict['selling'] = current_user.selling
-        if current_user.sold:
-            sell_page_dict['sold'] = current_user.sold
+
+        # THIS CODE IS THROWING ERROS
+        # WHEN TESTING, CURRENT_USER IS NOT INSTANTIATED
+        # WE NEED TO MAKE OBJECTS IN THE DATASTORE?
+        # current_user = get_logged_in_user(self)
+        # sell_page_dict['selling'] = current_user.selling
+        # sell_page_dict['sold'] = current_user.sold
 
         self.response.write(sell_template.render(sell_page_dict))
 
