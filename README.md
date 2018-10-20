@@ -11,5 +11,5 @@ Some key features are:
     OAuth login
 
 ## Creators
-Created by Emma Barron, Anthony Fiddes, and Shruthi Santhanam during HackGT
+Created by Emma Barron, Anthony Fiddes, Tyler Williams, and Shruthi Santhanam during HackGT
 2018.
