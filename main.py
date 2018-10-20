@@ -79,19 +79,22 @@ class SellPage(webapp2.RequestHandler):
         
     def post(self):
         condition = self.request.get("condition")
+        isbn = self.request.get("isbn")
         price = self.request.get("price")
 
         # upload photo
         # submit and save to database
         our_user = get_logged_in_user(self)
+        book_json = api.get_book(isbn)
 
         # make a new book object
         new_book = Book(
-            isbn = self.request.get("isbn"),
+            isbn = isbn,
             # run the API to auto-fill the other spaces in the form
             # that would be json, pretty sure
-            condition = self.request.get("condition"),
+            condition = condition,
             is_selling = True,
+            price = price,
             image_model = 1)
 
         # add the book to the user's selling list
@@ -101,6 +104,7 @@ class SellPage(webapp2.RequestHandler):
 
         # When the user submits, we'll have the page redirect?
         # Emma can't remember the control flow here - Shruthi!
+        # self.redirect("/profile")
 
 # Emma thinks it's done, just make sure the html lines up with this!
 class ResultsPage(webapp2.RequestHandler):

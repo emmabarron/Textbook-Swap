@@ -9,6 +9,7 @@ class Book(ndb.Model):
     title = ndb.StringProperty()
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
+    price = ndb.FloatProperty()
     is_selling = ndb.BooleanProperty()
     image_model = ndb.KeyProperty(kind=Image)
 
@@ -16,8 +17,8 @@ class UserInfo(ndb.Model):
     # nice goal - could make these not required
     # then if someone doesn't give a name, we use
     # the gmail's name
-    firstName = ndb.StringProperty(required=True)
-    lastName = ndb.StringProperty(required=True)
+    first_name = ndb.StringProperty(required=True)
+    last_name = ndb.StringProperty(required=True)
 
     # stretch goal stuff
     # these will make arrays of book objects
