@@ -132,8 +132,8 @@ class SellPage(webapp2.RequestHandler):
         # fixed, just need a button that redirects to the login page!
         current_user = get_logged_in_user(self)
 
-        sell_page_dict['selling'] = current_user.selling
-        sell_page_dict['sold'] = current_user.sold
+        # sell_page_dict['selling'] = current_user.selling
+        # sell_page_dict['sold'] = current_user.sold
 
         self.response.write(sell_template.render(sell_page_dict))
 
@@ -182,15 +182,18 @@ class SellPage(webapp2.RequestHandler):
 
 class ResultsPage(webapp2.RequestHandler):
     def post(self):
-        current_user = get_logged_in_user(self)
+        # current_user = get_logged_in_user(self)
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
 
         # books that the user has bought
-        if current_user.bought:
-            buy_page_dict['bought'] = current_user.bought
+        # if current_user.bought:
+        #     buy_page_dict['bought'] = current_user.bought
 
         this_book_isbn = self.request.get('isbn')
+
+        if this_book_isbn is None:
+            self.redirect('/')
         # the user's isbn input
 
         # hopefully this will return a list in condition order
@@ -203,8 +206,7 @@ class ResultsPage(webapp2.RequestHandler):
         # "-price"        price descending
         sort_order = self.request.get('how_to_sort')
 
-        q = db.Query(Book)
-        book_matches = q.filter('selling', True).filter('isbn=', this_book_isbn).order(sort_order).fetch()
+        book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(sort_order).fetch()
         buy_page_dict['book_matches'] = book_matches
 
         self.response.write(buy_template.render(buy_page_dict))
