@@ -70,7 +70,7 @@ div.start{
   text-align: center;
 }
 
-#isbn, #title, #author, #edition, #price, #words, #morewords {
+#isbn, #title, #author, #edition, #price, #words, #morewords, #words2, #lastwords {
   border-color: #ff5a60;
   color: #ff5a60;
   font-size: 20px;
