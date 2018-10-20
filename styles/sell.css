@@ -1,11 +1,13 @@
  html {
-  background color: #ededed;
+
   align-content: center;
-  min-height: 100%;
+
   margin: auto;
 
-  background-color: #ededed;
+
+  height: 80%;
   padding: 20px;
+  margin: 20px;
   border-color: #333;
   opacity: 0.75;
 }
@@ -35,14 +37,20 @@ div.start{
   margin: auto;
   text-align: center;
   background-color: #ededed;
-  padding: 20px;
+  width: 80%;
+  height:1000px;
+  padding: 0px;
   border-color: #333;
   opacity: 0.75;
 }
 .mdl-layout__content {
-    background-color: white;
+
+    padding: 20px;
     border-color: #333;
     align-self: center;
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
 }
 
 .starttext{
@@ -79,6 +87,7 @@ div.mdl-layout__drawer-button {
   justify-content: space-around;
   font-size: 18px;
 }
+
 
 /* div.mdl-layout__drawer{
   background-color: black;
