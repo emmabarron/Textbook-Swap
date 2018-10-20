@@ -169,6 +169,7 @@ class TestPage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', GreetingsPage),
+    ('/login', LoginPage),
     ('/sell', SellPage),
     ('/results', ResultsPage),
     ('/img', ImagePage),
