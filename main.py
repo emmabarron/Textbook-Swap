@@ -32,7 +32,7 @@ def get_logged_in_user(request_handler):
             'log_in_url' : users.create_login_url('/')
         }
         # put that Google log-in link on the page and get them in!
-        log_in_template = jinja_current_directory.get_template('templates/login-page.html')
+        log_in_template = jinja_env.get_template('templates/login-page.html')
         request_handler.response.write(log_in_template.render(dict))
         print 'transaction halted because user is not logged in'
         return None
@@ -41,7 +41,7 @@ def get_logged_in_user(request_handler):
     # now let's make sure that user has been logged into our site
     # aka do we have their Google ID in OUR model (which is called User)?
     # user (appengine) vs User (our own Model). Definitely not confusing
-    existing_user = User.get_by_id(user.user_id())
+    existing_user = UserInfo.get_by_id(user.user_id())
 
     # if this person is not a user in our database, throw an error
     if not existing_user:
@@ -57,7 +57,6 @@ class GreetingsPage(webapp2.RequestHandler):
     def get(self):
         home_template = jinja_env.get_template("templates/main.html")
         self.response.write(home_template.render()) # Home Page
-        print api.get_book(self, 1521919208)
 
 class SellPage(webapp2.RequestHandler):
     def get(self):
@@ -102,11 +101,10 @@ class SellPage(webapp2.RequestHandler):
         # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
         our_user.current.append(new_book)
 
-        self.response.write(sell_template.render())
-
 # Emma thinks it's done, just make sure the html lines up with this!
 class BuyPage(webapp2.RequestHandler):
     def post(self):
+        current_user = get_logged_in_user(self)
         buy_template = jinja_env.get_template("templates/buy.html")
         buy_page_dict = {}
 
@@ -121,14 +119,14 @@ class BuyPage(webapp2.RequestHandler):
         # I can change out what the .order() is with String.format?!
 
         # how we're sorting the order
-        # condition     condition ascending
-        # -condition    condition descending
-        # price         price ascending
-        # -price        price descending
+        # "condition"     condition ascending
+        # "-condition"    condition descending
+        # "price"         price ascending
+        # "-price"        price descending
         sort_order = self.request.get('how_to_sort')
 
         q = db.Query(Book)
-        book_matches = q.filter('selling', True).filter('isbn=', this_book_isbn).order('sort_order').fetch()
+        book_matches = q.filter('selling', True).filter('isbn=', this_book_isbn).order(sort_order).fetch()
         buy_page_dict['book_matches'] = book_matches
 
         self.response.write(buy_template.render(buy_page_dict))
