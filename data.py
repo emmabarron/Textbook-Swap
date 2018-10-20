@@ -10,7 +10,7 @@ class Book(ndb.Model):
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
     price = ndb.FloatProperty()
-    is_selling = ndb.BooleanProperty()
+    is_selling = ndb.BooleanProperty(default=True)
     image_model = ndb.KeyProperty(kind=Image)
 
 class UserInfo(ndb.Model):

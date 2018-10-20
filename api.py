@@ -24,4 +24,4 @@ def fetch_json(page, api_url, headers={}):
 
 def get_book(page, isbn):
     api_url = googlebooks.format(isbn) # openlibrary.format(isbn)
-    return fetch_json(page, api_url)
+    return fetch_json(page, api_url)["items"][0]
