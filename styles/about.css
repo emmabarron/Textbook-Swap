@@ -1,7 +1,12 @@
+@font-face {
+  font-family: airbnb;
+  src: url(../images/AirbnbCereal-Book.ttf) format("truetype");
+}
+
 body {
   background-color: white;
   color: #333;
-  font-family: 'Roboto Slab', serif;
+  font-family: airbnb;
   margin: 0;
   align-content:center;
 
@@ -75,6 +80,8 @@ font-size: 17px;
   text-align: center;
   background-color: #ff5a60;
   margin-bottom: 0;
+  font-family: airbnb;
+  color: white;
 }
 .fb-share-button{
 }
