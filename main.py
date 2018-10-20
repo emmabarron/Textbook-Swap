@@ -58,6 +58,70 @@ class GreetingsPage(webapp2.RequestHandler):
         home_template = jinja_env.get_template("templates/main.html")
         self.response.write(home_template.render()) # Home Page
 
+class LoginPage(webapp2.RequestHandler):
+        def get(self):
+        login_template = \
+                jinja_current_directory.get_template('templates/login-page.html')
+        people_template = jinja_current_directory.get_template('templates/people-page.html')
+        home_template = jinja_current_directory.get_template('templates/home-page.html')
+        login_dict = {}
+        name = ""
+        user = users.get_current_user()
+
+        # if the user is logged with Google
+        if user:
+            # magical users method from app engine xD
+            email_address = user.nickname()
+            # uses User (model obj) method to get the user's Google ID.
+            # hopefully it returns something...
+            our_site_user = User.get_by_id(user.user_id())
+            #dictionary - this gives the sign-out link
+            signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
+            signout_link = users.create_logout_url('/')
+
+            # if the user is logged in to both Google and us
+            if our_site_user:
+                sign_out_dict = {'logout_link' : signout_link, 'name' : our_site_user.name, 'email_address' : email_address}
+                self.response.write(home_template.render(sign_out_dict))
+
+              # If the user is logged into Google but never been to us before..
+              # if we want to fix OUR login page, this is where
+            else:
+                # self.response.write('''
+                #  Welcome to our site, %s!  Please sign up! <br>
+                #  <form method="post" action="/login">
+                #  <input type="text" name="first_name">
+                #  <input type="text" name="last_name">
+                #  <input type="submit">
+                #  </form><br> %s <br>
+                #  ''' % (email_address, signout_link_html))
+                self.response.write(login_template.render())
+
+        # Otherwise, the user isn't logged in to Google or us!
+        else:
+            self.response.write('''
+                Please log in to Google to use our site! <br>
+                <a href="%s">Sign in</a>''' % (
+                  users.create_login_url('/login')))
+
+    def post(self):
+        user = users.get_current_user()
+        if not user:
+            # You shouldn't be able to get here without being logged in to Google
+            self.error(404)
+            return
+        our_user = User(
+            email=user.nickname(),     # current user's email
+            id=user.user_id(),         # current user's ID number
+            name=self.request.get("first_name") + " " + self.request.get("last_name")
+            )
+        our_user.put()
+        wel_dict = {'welcome': 'Thanks for signing up, %s!' %
+            our_user.name}
+
+        home_template = jinja_current_directory.get_template('templates/home-page.html')
+        self.response.write(home_template.render(wel_dict))
+
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
