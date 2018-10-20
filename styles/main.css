@@ -21,7 +21,8 @@ form{
 }
 div.start{
   position: relative;
-  vertical-align: middle;
+  margin-top: 10%;
+  margin-bottom: auto;
   top: 50%;
   left: 25%;
   height:auto;
@@ -52,12 +53,19 @@ div.start{
   text-align: center;
 }
 
-#prefbutt{
+#isbn {
   order: 1;
-  background-color: #ff5a60;
-  color: white;
+  border-color: #ff5a60;
+  background-color: white;
+  color: #ff5a60;
+  font-size: 20px;
 }
 
+::placeholder {
+  color: #ff5a60;
+  font-size: 20px;
+  opacity: 0.5;
+}
 div.mdl-layout__drawer-button {
   /* This background is dark, so we set text to white. Use 87% black instead if
      your background is light. */
