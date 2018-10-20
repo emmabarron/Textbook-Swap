@@ -22,4 +22,4 @@ class UserInfo(ndb.Model):
     # these will make arrays of book objects
     bought = ndb.StructuredProperty(Book, repeated=True)
     sold = ndb.StructuredProperty(Book, repeated=True)
-    current = ndb.StructuredProperty(Book, repeated=True)
+    selling = ndb.StructuredProperty(Book, repeated=True)

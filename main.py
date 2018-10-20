@@ -62,21 +62,24 @@ class GreetingsPage(webapp2.RequestHandler):
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
+        
+        # show current books the user is currently trying to sell
+        # also shows what the user has sold
+        current_user = get_logged_in_user(self)
+        sell_page_dict = {}
+        if current_user.selling:
+            sell_page_dict['selling'] = current_user.selling
+        if current_user.sold:
+            sell_page_dict['sold'] = current_user.sold
+
+
+
+        self.response.write(sell_template.render(sell_page_dict))
+
         # Ideally, users choose to add or remove a book to sell
         # If removing, <some functionality>
         # If adding, some way to autopopulate title, author, and edition boxes!
-
-        # show current books that you're trying to sell?
-        self.response.write(sell_template.render())
-
-    # this places a form in a space for the user to upload an image
-    def submit_form(request):
-        if request.method == 'POST':
-            form = Form(request.POST)
-            if not form.has_changed():
-                self.response.write("Please fill out all fields before submitting.")
-                # Generate Error
-
+        
     def post(self):
         condition = self.request.get("condition")
         price = self.request.get("price")
@@ -90,32 +93,42 @@ class SellPage(webapp2.RequestHandler):
             condition = self.request.get("condition"),
             image_model = 1 )
         new_book.put()
+
         # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
         our_user.current.append(new_book)
 
         self.response.write(sell_template.render())
 
+# Emma thinks it's done, just make sure the html lines up with this!
 class BuyPage(webapp2.RequestHandler):
     def post(self):
         buy_template = jinja_env.get_template("templates/buy.html")
         buy_page_dict = {}
 
-        this_book_isbn = 123456789
+        # books that the user has bought
+        if current_user.bought:
+            buy_page_dict['bought'] = current_user.bought
+
+        this_book_isbn = self.request.get('isbn')
         # the user's isbn input
 
         # hopefully this will return a list in condition order
         # I can change out what the .order() is with String.format?!
 
         # how we're sorting the order
-        # condition, -condition, price, -price
+        # condition     condition ascending
+        # -condition    condition descending
+        # price         price ascending
+        # -price        price descending
         sort_order = self.request.get('how_to_sort')
 
         q = db.Query(Book)
         book_matches = q.filter('isbn=', this_book_isbn).order('sort_order').fetch()
+        buy_page_dict['book_matches'] = book_matches
 
-        # pretty sure I pass in a dictionary through the render()
-        self.response.write(buy_template.render(book_matches))
+        self.response.write(buy_template.render(buy_page_dict))
 
+# What is this page for?
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         try:
