@@ -1,0 +1,126 @@
+body {
+  background-color: white;
+  font-family: 'Roboto Slab', serif;
+  margin: 0;
+  align-content:center;
+
+}
+.selectors{
+  position: relative;
+  margin-top: 12.5%;
+  margin-bottom: auto;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  top: 50%;
+  height:90%;
+  width:auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: black;
+  padding: 40px;
+  box-shadow: 2px 2px 10px rgba(0,0,0, .75);
+}
+.question{
+  text-align: center;
+  position:relative;
+  height:auto;
+  width:30%;
+  display: flex;
+  flex-direction: column;
+  white-space: pre-wrap;
+
+}
+#character{
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: 2px 2px 10px rgba(0,0,0, .75);
+  min-height:fit-content;
+  width: 50%;
+  margin-top: 6.25%;
+  margin-bottom: 6.25%;
+  margin-left: 25%;
+  margin-right: 25%
+}
+#butt{
+  color: white;
+  background-color: black;
+  align-self: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* #characterdiv{
+  height: auto;
+  position: relative;
+  left:25%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-around;
+  background-color: white;
+} */
+.chartext{
+    /* overflow: scroll; */
+    font-size: 1.25em;
+}
+form{
+  display: flex;
+  align-content: center;
+  min-height: fit-content;
+  flex-direction: column;
+}
+#thetoast {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: rgba(0,0,0, .75); /* Black background color */
+    color: white; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 10px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+#thetoast.display{
+  visibility: visible;
+  animation: fadeIn 1s, fadeOut 1s 3s;
+}
+
+@keyframes fadeIn {
+  from{left:0; opacity: 0;}
+  to{left:0; opacity: 1;}
+}
+@keyframes fadeOut {
+  from{left:0; opacity: 1;}
+  to{left:0; opacity: 0;}
+}
+select{
+  appearance:none;
+  -webkit-appearance: none;
+  font-size: 17px;
+}
+.mdl-mini-footer{
+  width: 100%;
+  padding-right: 8px;
+  padding-left: 8px;
+  justify-content: space-around;
+  font-size: 18px;
+  bottom:0%;
+
+}
+.mdl-layout{
+  min-height: fit-content;
+}
+.mdl-layout.mdl-js-layout.mdl-layout--fixed-header{
+  justify-content: space-between;
+}
