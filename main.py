@@ -60,8 +60,7 @@ class GreetingsPage(webapp2.RequestHandler):
 
 class LoginPage(webapp2.RequestHandler):
         def get(self):
-        login_template = \
-                jinja_current_directory.get_template('templates/login-page.html')
+        login_template = jinja_env.get_template('templates/login-page.html')
         login_dict = {}
         user = users.get_current_user()
 
