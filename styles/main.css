@@ -54,6 +54,8 @@ div.start{
 #welcome{
   text-align: center;
   font-family: smriti;
+  font-size: 100px;
+  color: #ff5a60;
 }
 
 #isbn {

@@ -141,23 +141,33 @@ class SellPage(webapp2.RequestHandler):
         
     def post(self):
         condition = self.request.get("condition")
-        isbn = self.request.get("isbn")
-        price = self.request.get("price")
+        isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
+        price = float(self.request.get("price")) # ^ but with float()
 
         # upload photo
         # submit and save to database
         our_user = get_logged_in_user(self)
-        book_json = api.get_book(isbn)
+        book_json = api.get_book(isbn) # Needs to throw an error if it returns empty
+        authors = book_json["volumeInfo"]["authors"]
+
+        if len(authors) > 1:
+            authors = ", ".join(authors)
+        else:
+            authors = authors[0]
 
         # make a new book object
         new_book = Book(
             isbn = isbn,
             # run the API to auto-fill the other spaces in the form
             # that would be json, pretty sure
+            # ^^ you were right
+            title = book_json["volumeInfo"]["title"],
+            author = authors,
             condition = condition,
             is_selling = True,
             price = price,
-            image_model = 1)
+            image_model = 1 # this needs help
+        )
 
         # add the book to the user's selling list
         new_book.put()
