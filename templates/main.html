@@ -15,15 +15,15 @@
     <main class="mdl-layout__content">
         <div class="start">
           <h1 class="starttext" id="welcome">SMRITI</h1>
-          <form>
-            <input type="number" name="isbn" placeholder="Type in the ISBN of a book" id="isbn"><br>
-          </form>
-          <!-- Something is wrong with this button... it doesn't take you to the right place -->
           <form action="/results">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="buy">I'm buying!</button><br>
-          </form>
-          <form action="/sell">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="sell">I'm selling!</button>
+            <input name="isbn" placeholder="Type in the ISBN of a book" id="isbn"><br>
+          <!-- </form> -->
+          <!-- Something is wrong with this button... it doesn't take you to the right place -->
+          <!-- <form action="/results"> -->
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">I'm buying!</button><br>
+          <!-- </form> -->
+          <!-- <form action="/sell"> -->
+            <button type="submit" formaction="/sell" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">I'm selling!</button>
           </form>
 
       </div>
