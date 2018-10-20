@@ -32,19 +32,22 @@
     <p id="thetoast"></p>
 
 
-
-
-      <div id='character' class="">
+    <div class="row">
+      <div class="column">
         <img id="charimage" src="{{character.image_url}}">
-        <p class="chartext" id="charline1"><b>{{character.name}}</b></p>
-        <p class="chartext" id="charline2">Wiki Link: <a target="_blank" href='{{character.wiki_link}}'>{{character.wiki_link}}</a></p>
-        <p class="chartext" id="charline1">Special Moves: {{character.up_b}}, {{character.side_b}}, {{character.down_b}}</p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect votebutton" name="votebutton" value = "{{character.key.id()}}">Vote for this character</button><br>
-        <button onclick="toast()" user_id = "{{userid}}" id="onlybutton" value = "{{character.key.id()}}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect savebutton" name="savebutton">Save character to profile</button><br>
       </div>
+      <div id='character' class="column">
+        <p class="chartext" id="charline1"><b><i>{{book.name}}</i></b></p>
+        <p class="chartext" id="charline2"><b>Condition:</b> {{book.condition}}</p>
+        <p class="chartext" id="charline3"><b>Seller:</b> {{seller.name}}</p>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect votebutton" name="votebutton" value = "{{mailto}}">Contact the seller</button><br>
+      </div>
+      <div class="column">
+        <p class="chartext" id="price"><b>{{book.price}}</b></p>
+      </div>
+    </div>
     <footer class="mdl-mini-footer" style="align: center" >
       <div class="mdl-mini-footer__left-section">
-        <div class="mdl-logo">Meet the Creators:</div>
         <ul class="mdl-mini-footer__link-list">
           <li><a href="https://www.linkedin.com/in/shruthi-santhanam">Shruthi's LinkedIn</a></li>
           <li><a href="https://www.linkedin.com/in/n-zinga-thecomputerscientist">N'Zinga's LinkedIn</a></li>
