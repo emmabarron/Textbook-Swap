@@ -72,9 +72,15 @@ class ImagePage(webapp2.RequestHandler):
         current_user.put()
         self.redirect('/info_update')
 
+class TestPage(webapp2.RequestHandler):
+    def get(self):
+        # home_template = jinja_env.get_template("templates/main.html")
+        self.response.write(api.get_book(self, 1521919208)) # Home Page
+
 app = webapp2.WSGIApplication([
     ('/', GreetingsPage),
     ('/sell', SellPage),
     ('/results', ResultsPage),
-    ('/img', ImagePage)
+    ('/img', ImagePage),
+    ('/test', TestPage),
 ], debug=True)
