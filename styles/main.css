@@ -36,6 +36,7 @@ div.start{
   height:300px;
   border-color: #333;
   opacity: 0.75;
+  display: inline-block;
 }
 
 #myVideo {
@@ -86,7 +87,9 @@ div.mdl-layout__drawer-button {
   justify-content: space-around;
   font-size: 18px;
 }
-
+.mdl-button{
+  display: inline-block;
+}
 
 
 /* div.mdl-layout__drawer{
