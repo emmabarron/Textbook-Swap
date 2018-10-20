@@ -9,6 +9,7 @@ class Book(ndb.Model):
     title = ndb.StringProperty()
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
+    is_selling = ndb.BooleanProperty()
     image_model = ndb.KeyProperty(kind=Image)
 
 class UserInfo(ndb.Model):
