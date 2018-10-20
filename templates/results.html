@@ -20,21 +20,15 @@
  }(document, 'script', 'facebook-jssdk'));</script>
 </head>
 <body>
-  <script>
-    var toasty= document.querySelector('#thetoast')
-    function toast() {
-      toasty.classList.add(".display")
-    }
-  </script>
+
   <!-- A workig menu -->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <p id="thetoast"></p>
     <form  method = "post" action="/prefs?type=show">
       <div class="selectors">
         <div class="question">
-          <h6>Filter your results by:</h6>
-          <select  name="skill">
+          <h6 id="andy">Filter your results by:</h6>
+          <select  name="skill" id="andy2">
             <option   value="5">Price: low-high</option>
             <option   value="4">Price: high-low</option>
             <option   value="3">Newest first</option>

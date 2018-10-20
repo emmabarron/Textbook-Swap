@@ -8,7 +8,13 @@ body {
   font-family: airbnb;
   margin: 0;
   align-content:center;
-
+  background-color: #0588ad;
+}
+#andy, #andy2, #butt {
+  font-family: airbnb;
+}
+#butt {
+  background-color: #333;
 }
 .selectors{
   position: relative;
@@ -25,9 +31,10 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: black;
+  background-color: #333;
   padding: 40px;
   box-shadow: 2px 2px 10px rgba(0,0,0, .75);
+  font-family: airbnb;
 }
 .question{
   text-align: center;
