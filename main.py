@@ -64,6 +64,14 @@ class SellPage(webapp2.RequestHandler):
         sell_template = jinja_env.get_template("templates/sell.html")
         self.response.write(sell_template.render())
 
+class BuyPage(webapp2.RequestHandler):
+    def get(self):
+        buy_template = jinja_env.get_template("templates/buy.html")
+        buy_page_dict = {}
+
+        # pretty sure I pass in a dictionary through the render()
+        self.response.write(buy_template.render())
+
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         try:
@@ -116,6 +124,7 @@ class TestPage(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', GreetingsPage),
     ('/sell', SellPage),
+    ('/buy', BuyPage),
     ('/results', ResultsPage),
     ('/img', ImagePage),
     ('/test', TestPage),
