@@ -72,8 +72,6 @@ class SellPage(webapp2.RequestHandler):
         if current_user.sold:
             sell_page_dict['sold'] = current_user.sold
 
-
-
         self.response.write(sell_template.render(sell_page_dict))
 
         # Ideally, users choose to add or remove a book to sell
@@ -90,8 +88,15 @@ class SellPage(webapp2.RequestHandler):
 
         new_book = Book(
             isbn = self.request.get("isbn"),
+            # run the API to auto-fill the other spaces in the form
+            # that would be json, pretty sure
             condition = self.request.get("condition"),
+            is_selling = True,
             image_model = 1 )
+
+        # add the book to the user's selling list
+        # When the user submits, we'll have the page redirect
+
         new_book.put()
 
         # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
@@ -123,7 +128,7 @@ class BuyPage(webapp2.RequestHandler):
         sort_order = self.request.get('how_to_sort')
 
         q = db.Query(Book)
-        book_matches = q.filter('isbn=', this_book_isbn).order('sort_order').fetch()
+        book_matches = q.filter('selling', True).filter('isbn=', this_book_isbn).order('sort_order').fetch()
         buy_page_dict['book_matches'] = book_matches
 
         self.response.write(buy_template.render(buy_page_dict))
