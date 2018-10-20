@@ -2,6 +2,7 @@ from google.appengine.api import urlfetch
 import json
 
 openlibrary = "https://openlibrary.org/api/books?bibkeys=ISBN:{}&format=json"
+googlebooks = "https://www.googleapis.com/books/v1/volumes?q=isbn:{}&key=AIzaSyAyZMulstKQKPSV4Pm9zKoJB8OIQJRrXT4"
 
 # page is the self object inside of a requesthandler
 def fetch_json(page, api_url, headers={}):
@@ -22,5 +23,5 @@ def fetch_json(page, api_url, headers={}):
     return {}
 
 def get_book(page, isbn):
-    api_url = openlibrary.format(isbn)
+    api_url = googlebooks.format(isbn) # openlibrary.format(isbn)
     return fetch_json(page, api_url)
