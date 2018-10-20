@@ -6,7 +6,7 @@ class Image(ndb.Model):
 class Book(ndb.Model):
     isbn = ndb.IntegerProperty(required=True)
     condition = ndb.IntegerProperty(required=True)
-    title = ndb.StringProperty(required=True)
+    title = ndb.StringProperty()
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
     image_model = ndb.KeyProperty(kind=Image)

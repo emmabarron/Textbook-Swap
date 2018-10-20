@@ -62,15 +62,59 @@ class GreetingsPage(webapp2.RequestHandler):
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
+        # Ideally, users choose to add or remove a book to sell
+        # If removing, <some functionality>
+        # If adding, some way to autopopulate title, author, and edition boxes!
+
+        # show current books that you're trying to sell?
+        self.response.write(sell_template.render())
+
+    # this places a form in a space for the user to upload an image
+    def submit_form(request):
+        if request.method == 'POST':
+            form = Form(request.POST)
+            if not form.has_changed():
+                self.response.write("Please fill out all fields before submitting.")
+                # Generate Error
+
+    def post(self):
+        condition = self.request.get("condition")
+        price = self.request.get("price")
+
+        # upload photo
+        # submit and save to database
+        our_user = get_logged_in_user(self)
+
+        new_book = Book(
+            isbn = self.request.get("isbn"),
+            condition = self.request.get("condition"),
+            image_model = 1 )
+        new_book.put()
+        # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
+        our_user.current.append(new_book)
+
         self.response.write(sell_template.render())
 
 class BuyPage(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         buy_template = jinja_env.get_template("templates/buy.html")
         buy_page_dict = {}
 
+        this_book_isbn = 123456789
+        # the user's isbn input
+
+        # hopefully this will return a list in condition order
+        # I can change out what the .order() is with String.format?!
+
+        # how we're sorting the order
+        # condition, -condition, price, -price
+        sort_order = self.request.get('how_to_sort')
+
+        q = db.Query(Book)
+        book_matches = q.filter('isbn=', this_book_isbn).order('sort_order').fetch()
+
         # pretty sure I pass in a dictionary through the render()
-        self.response.write(buy_template.render())
+        self.response.write(buy_template.render(book_matches))
 
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
@@ -84,7 +128,7 @@ class ResultsPage(webapp2.RequestHandler):
 class ImagePage(webapp2.RequestHandler):
     def get(self):
         # to do this, we need to have a "/img?id=" + str(img_id)
-        # the self.request.get('id') works fro stuff after ?
+        # the self.request.get('id') works for stuff after ?
         img_id = self.request.get('id')
 
         if not img_id:
@@ -99,11 +143,6 @@ class ImagePage(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'image/jpeg'
         self.response.out.write(some_img)
 
-        # send it back to the page!
-        # OMG if this works I can use it in my peoples page too!?!
-        # like, I could send the image in binary over? Or I could have each user call this method?
-        # they each have their own image IDs
-        # and then that ID can be used to build like a dictionary? (Or will that mess it up)
     def post(self):
         avatar = self.request.get('image')
 
@@ -114,7 +153,7 @@ class ImagePage(webapp2.RequestHandler):
         img_id = this_image.put()
         current_user.image_model = img_id
         current_user.put()
-        self.redirect('/info_update')
+        self.redirect('/sell')
 
 class TestPage(webapp2.RequestHandler):
     def get(self):
