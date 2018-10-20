@@ -85,27 +85,28 @@ class SellPage(webapp2.RequestHandler):
         # submit and save to database
         our_user = get_logged_in_user(self)
 
+        # make a new book object
         new_book = Book(
             isbn = self.request.get("isbn"),
             # run the API to auto-fill the other spaces in the form
             # that would be json, pretty sure
             condition = self.request.get("condition"),
             is_selling = True,
-            image_model = 1 )
+            image_model = 1)
 
         # add the book to the user's selling list
-        # When the user submits, we'll have the page redirect
-
         new_book.put()
-
         # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
-        our_user.current.append(new_book)
+        our_user.selling.append(new_book)
+
+        # When the user submits, we'll have the page redirect?
+        # Emma can't remember the control flow here - Shruthi!
 
 # Emma thinks it's done, just make sure the html lines up with this!
-class BuyPage(webapp2.RequestHandler):
+class ResultsPage(webapp2.RequestHandler):
     def post(self):
         current_user = get_logged_in_user(self)
-        buy_template = jinja_env.get_template("templates/buy.html")
+        buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
 
         # books that the user has bought
@@ -130,16 +131,6 @@ class BuyPage(webapp2.RequestHandler):
         buy_page_dict['book_matches'] = book_matches
 
         self.response.write(buy_template.render(buy_page_dict))
-
-# What is this page for?
-class ResultsPage(webapp2.RequestHandler):
-    def get(self):
-        try:
-            results_page = jinja_env.get_template("templates/main.html")
-            self.response.write(results_page.render())
-        except Exception as e:
-            print e
-            self.redirect("/")
 
 class ImagePage(webapp2.RequestHandler):
     def get(self):
