@@ -10,6 +10,7 @@ from google.appengine.api import images
 from data import UserInfo
 from data import Book
 from data import Image
+import api
 
 jinja_env = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -20,10 +21,11 @@ class GreetingsPage(webapp2.RequestHandler):
     def get(self):
         home_template = jinja_env.get_template("templates/main.html")
         self.response.write(home_template.render()) # Home Page
+        print api.get_book(self, 1521919208)
 
 class SellPage(webapp2.RequestHandler):
     def get(self):
-        sell_template = jinja2_env.get_template("templates/sell.html")
+        sell_template = jinja_env.get_template("templates/sell.html")
         self.response.write(sell_template.render())
 
 class ResultsPage(webapp2.RequestHandler):
