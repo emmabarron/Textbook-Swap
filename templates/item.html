@@ -29,23 +29,19 @@
   <!-- A workig menu -->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <p id="thetoast"></p>
+
 
 
     <div class="row">
-      <div class="column">
-        <img id="charimage" src="{{book.image_model}}">
-      </div>
       <div id='character' class="column">
+        <img id="charimage" src="{{book.image_model}}">
         <p class="chartext" id="charline1"><b><i>{{book.title}}</i></b></p>
+          <p class="chartext" id="price"><b>${{book.price}}</b></p>
         <p class="chartext" id="charline2"><b>Condition:</b> {{book.condition}}</p>
         <p class="chartext" id="charline3"><b>Seller:</b> {{seller.first_name}} {{seller.last_name}}</p>
         <form action="mailto:{{seller.email}}">
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect votebutton" name="votebutton">Contact the seller</button><br>
         </form>
-      </div>
-      <div class="column">
-        <p class="chartext" id="price"><b>${{book.price}}</b></p>
       </div>
     </div>
     <footer class="mdl-mini-footer" style="align: center" >
