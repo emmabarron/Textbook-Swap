@@ -1,10 +1,18 @@
+@font-face {
+  font-family: airbnb;
+  src: url(../images/AirbnbCereal-Book.ttf) format("truetype");
+}
+
 body {
-  background-color: white;
-  color: #333;
-  font-family: 'Roboto Slab', serif;
+  background-color: #0588ad;
+  color: white;
   margin: 0;
   align-content:center;
+  font-family: airbnb;
+}
 
+#profile, #line3, #saved {
+  font-family: airbnb;
 }
 
 .myPrefs{

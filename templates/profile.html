@@ -9,44 +9,22 @@
     <title>Profile</title>
   </head>
   <body>
-    <!-- Left aligned menu below button. This is a menubutton that works -->
-<!-- <button id="demo-menu-lower-left"
-        class="mdl-button mdl-js-button mdl-button--icon">
-  <i class="material-icons">more_vert</i>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-    for="demo-menu-lower-left">
-  <li class="mdl-menu__item"><a id="menu_item" href="/">Home</a></li>
-  <li class="mdl-menu__item mdl-menu__item--full-bleed-divider"><a id="menu_item" href="/prefs">Preferences</a></li>
-  <li class="mdl-menu__item"><a id="menu_item" href="/abt">About</a></li>
-</ul> -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
             mdl-layout--fixed-tabs">
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Menu</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="/home">Home</a>
-      <a class="mdl-navigation__link" href="/abt">About</a>
-      <a class="mdl-navigation__link" href="/prefs"><b>Character Generator</b></a>
-      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
-      <a class="mdl-navigation__link" href="/profile">Your Profile</a>
-      <a class="mdl-navigation__link" href="/">Log Out</a>
-    </nav>
-  </div>
-  <div id="welcome">
-    <h1 align="center"> Welcome to your profile page! </h1>
-  </div>
+            <div id="welcome">
+              <h1 align="center" id="profile"> Welcome to your profile page! </h1>
+            </div>
 
-  <h3 align="center">  {{line3}}</h3>
-  <h3 align="center">Your Saved Characters:</h3>
-  <div id='prefs' >
+            <h3 align="center" id="line3">{{user.first_name}} {{user.last_name}}</h3>
+            <h3 align="center" id="saved">Your Listings:</h3>
+            <div id='prefs' >
 
-  {% for char in line1 %}
+  {% for book in books %}
   <div class="myPrefs">
-    <img id="charimage" src="{{char.get().image_url}}">
-    <p class="chartext" id="charline1"><b>{{char.get().name}}</b></p>
-    <p class="chartext" id="charline2">Wiki Link: <a target="_blank" href='{{char.get().wiki_link}}'>{{char.get().wiki_link}}</a></p>
-    <p class="chartext" id="charline1">Special Moves: {{char.get().up_b}}, {{char.get().side_b}}, {{char.get().down_b}}</p>
+    <img id="charimage" src="{{book.image_model}}">
+    <p class="chartext" id="charline1"><b><i>{{book.title}}</i></b></p>
+      <p class="chartext" id="price"><b>${{book.price}}</b></p>
+    <p class="chartext" id="charline2"><b>Condition:</b> {{book.condition}}</p>
   </div>
   {% endfor %}
 </div>
