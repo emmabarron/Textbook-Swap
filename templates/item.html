@@ -34,27 +34,27 @@
 
     <div class="row">
       <div class="column">
-        <img id="charimage" src="{{character.image_url}}">
+        <img id="charimage" src="{{book.image_model}}">
       </div>
       <div id='character' class="column">
-        <p class="chartext" id="charline1"><b><i>{{book.name}}</i></b></p>
+        <p class="chartext" id="charline1"><b><i>{{book.title}}</i></b></p>
         <p class="chartext" id="charline2"><b>Condition:</b> {{book.condition}}</p>
-        <p class="chartext" id="charline3"><b>Seller:</b> {{seller.name}}</p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect votebutton" name="votebutton" value = "{{mailto}}">Contact the seller</button><br>
+        <p class="chartext" id="charline3"><b>Seller:</b> {{seller.first_name}} {{seller.last_name}}</p>
+        <form action="mailto:{{seller.email}}">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect votebutton" name="votebutton">Contact the seller</button><br>
+        </form>
       </div>
       <div class="column">
-        <p class="chartext" id="price"><b>{{book.price}}</b></p>
+        <p class="chartext" id="price"><b>${{book.price}}</b></p>
       </div>
     </div>
     <footer class="mdl-mini-footer" style="align: center" >
       <div class="mdl-mini-footer__left-section">
         <ul class="mdl-mini-footer__link-list">
           <li><a href="https://www.linkedin.com/in/shruthi-santhanam">Shruthi's LinkedIn</a></li>
-          <li><a href="https://www.linkedin.com/in/n-zinga-thecomputerscientist">N'Zinga's LinkedIn</a></li>
-          <li><a href="https://www.linkedin.com/in/georgiana-wright">Georgiana's LinkedIn</a></li>
-          <div class="fb-share-button" data-href="/prefs"
-        data-layout="button_count">
-      </div>
+          <li><a href="https://www.linkedin.com/in/anthony-fiddes-306114149/">Anthony's LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/emma-barron-8677b2171/">Emma's LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/tyler-williams-811771173">Tyler's LinkedIn</a></li>
         </ul>
       </div>
     </footer>

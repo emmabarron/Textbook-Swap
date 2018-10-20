@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -12,7 +11,35 @@
   <link rel ="stylesheet" href="styles/sell.css">
 </head>
 <body>
+<!--   Form
+    The ISBN will have been gotten from main, and the API call already made. So now we auto-populate
+    the following fields. -->
 
+    <form>
+      <!-- While we could just not take in these fields...
+      We can either have these just for show... or use this html
+      to send the info between pages, in a sense -->
+      <input id="isbn" > ISBN
+      <input id="title" > Title
+      <input id="author" > Author
+      <input id="edition"> Edition
+      <!-- Should be a drop-down, where it returns numbers depending on what is given -->
+      <input id="condition"> Condition
+      <input id="price"> Price
+    </form>
+
+    <!-- I commented out the django 'if' statements
+    I'm not sure if we need them -->
+    <!-- {% if image_profile is defined %} -->
+      <img src={{image_profile}} />
+      <!-- {% endif %} -->
+      <form action="/img" enctype="multipart/form-data" method="post">
+        <h3>Profile Picture</h3>
+        <input id="picture" name="image" type="file" accept="image/*" >
+        <input type="submit" value="upload">
+      </form>
+
+<<<<<<< HEAD
     <main class="mdl-layout__content">
         <div class="start">
           <!-- <h1 class="starttext" id="welcome"></h1> -->
@@ -41,8 +68,11 @@
 <!-- <form action = "/prefs">
 <button>Change your preferences!</button>
 </form> -->
+=======
+>>>>>>> a17c0070fe398969a8c49087a8362acfbca3f2a6
 </body>
 </html>
+
 <!-- The form to get an image uploaded
 It's not integrated with main.py yet
 But hopefully it will be soon! -->
