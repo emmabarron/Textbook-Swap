@@ -1,6 +1,10 @@
+@font-face {
+  font-family: airbnb;
+  src: url(../images/AirbnbCereal-Book.ttf) format("truetype");
+}
 body {
   background-color: white;
-  font-family: 'Roboto Slab', serif;
+  font-family: airbnb;
   margin: 0;
   align-content:center;
 
@@ -117,6 +121,8 @@ select{
   font-size: 18px;
   bottom:0%;
   background-color: #ff5a60;
+  color: white;
+  font-family: airbnb;
 }
 .mdl-layout{
   min-height: fit-content;
