@@ -131,6 +131,7 @@ class SellPage(webapp2.RequestHandler):
         # Because the user is not logged in... to the google database OOF
         # fixed, just need a button that redirects to the login page!
         current_user = get_logged_in_user(self)
+
         sell_page_dict['selling'] = current_user.selling
         sell_page_dict['sold'] = current_user.sold
 
@@ -179,7 +180,6 @@ class SellPage(webapp2.RequestHandler):
         # Emma can't remember the control flow here - Shruthi!
         # self.redirect("/profile")
 
-# Emma thinks it's done, just make sure the html lines up with this!
 class ResultsPage(webapp2.RequestHandler):
     def post(self):
         current_user = get_logged_in_user(self)
