@@ -181,7 +181,7 @@ class SellPage(webapp2.RequestHandler):
         # self.redirect("/profile")
 
 class ResultsPage(webapp2.RequestHandler):
-    def post(self):
+    def get(self):
         # current_user = get_logged_in_user(self)
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
@@ -192,8 +192,6 @@ class ResultsPage(webapp2.RequestHandler):
 
         this_book_isbn = self.request.get('isbn')
 
-        if this_book_isbn is None:
-            self.redirect('/')
         # the user's isbn input
 
         # hopefully this will return a list in condition order
