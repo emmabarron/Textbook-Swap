@@ -13,12 +13,13 @@ jinja_env = jinja2.Environment(
 
 class GreetingsPage(webapp2.RequestHandler):
     def get(self):
-        home_template = jinja_env.get_template("templates/index.html")
-        self.response.write(home_template.render())# Home Page
+        home_template = jinja_env.get_template("templates/main.html")
+        self.response.write(home_template.render()) # Home Page
 
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         try:
+            results_page = jinja_env.get_template("templates/main.html")
             self.response.write(results_page.render())
         except Exception as e:
             print e
