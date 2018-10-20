@@ -14,7 +14,8 @@ def fetch_json(page, api_url, headers={}):
             return json.loads(result.content)
         else:
             page.response.status_code = result.status_code
-    except urlfetch.Error:
+    except urlfetch.Error as e:
+        print e
         # logging.exception('Caught exception fetching url')
         pass
 
