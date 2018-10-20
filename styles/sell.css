@@ -1,14 +1,22 @@
-/* html {
-  background:  url(/images/smashbrosstart.gif) no-repeat center center fixed;
-  background-size: cover;
-} */
-/* body {
+ html {
+  background color: #ededed;
+  align-content: center;
+  min-height: 100%;
+  margin: auto;
+
+  background-color: #ededed;
+  padding: 20px;
+  border-color: #333;
+  opacity: 0.75;
+}
+ /* body {
     background-image:url('../images/smashbrosstart.gif');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     height:100%;
     width:100%;
+  } */
     /* display: flex;
 } */
 i {
@@ -21,8 +29,11 @@ form{
   align-items: center;
 }
 div.start{
+  display: block;
+  align-content: center;
+  min-height: 100%;
   margin: auto;
-  width: 60%;
+  text-align: center;
   background-color: #ededed;
   padding: 20px;
   border-color: #333;

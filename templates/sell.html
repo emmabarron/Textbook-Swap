@@ -15,9 +15,11 @@
 
     <main class="mdl-layout__content">
         <div class="start">
-          <h1 class="starttext" id="welcome">SMRITI</h1>
+          <!-- <h1 class="starttext" id="welcome"></h1> -->
           <form action = "/prefs">
-            <input type="text" name="isbn" placeholder="Type in the ISBN of a book" id="isbn"><br>
+            <!-- <input type="text" name="isbn" placeholder="Type in the ISBN of a book" id="isbn"><br> -->
+            <input id="picture" name="image" type="file" accept="image/*" ><br>
+            <input type="submit" value="upload"><br>
           </form>
 
       </div>
@@ -44,12 +46,13 @@
 It's not integrated with main.py yet
 But hopefully it will be soon! -->
 
-<h2 id="forms_header"> tell us about yourself.</h2><br>
-      {% if image_profile is defined %}
+<!-- <h2 id="forms_header"> tell us about yourself.</h2> -->
+<br>
+      <!-- {% if image_profile is defined %}
       <img src={{image_profile}} />
       {% endif %}
       <form action="/img" enctype="multipart/form-data" method="post">
         <h3>Profile Picture</h3>
         <input id="picture" name="image" type="file" accept="image/*" >
         <input type="submit" value="upload">
-      </form>
+      </form> -->
