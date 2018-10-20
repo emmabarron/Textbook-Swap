@@ -15,16 +15,22 @@
     The ISBN will have been gotten from main, and the API call already made. So now we auto-populate
     the following fields. -->
 
-    <form>
+    <form action = "/sell">
       <!-- While we could just not take in these fields...
       We can either have these just for show... or use this html
       to send the info between pages, in a sense -->
-      <input id="isbn" > ISBN
+      <input type="text" name="isbn" placeholder="ISBN" id="isbn">
       <input id="title" > Title
       <input id="author" > Author
       <input id="edition"> Edition
       <!-- Should be a drop-down, where it returns numbers depending on what is given -->
-      <input id="condition"> Condition
+
+      <select class="options" name="condition">
+          <option value=3>Great!</option>
+          <option value=2>Good</option>
+          <option value=1>Poor</option>
+        </select>
+
       <input id="price"> Price
     </form>
 
@@ -39,37 +45,6 @@
         <input type="submit" value="upload">
       </form>
 
-<<<<<<< HEAD
-    <main class="mdl-layout__content">
-        <div class="start">
-          <!-- <h1 class="starttext" id="welcome"></h1> -->
-          <form action = "/sell">
-            <!-- <input type="text" name="isbn" placeholder="Type in the ISBN of a book" id="isbn"><br> -->
-            <input id="picture" name="image" type="file" accept="image/*" ><br>
-            <input type="submit" value="upload"><br>
-          </form>
-
-      </div>
-    </main>
-  </div>
-
-</div>
-<!-- <div class="square"> ugh </div> -->
-
-
-<!-- <form action = "/prefs">
-<button>Change your preferences!</button>
-</form> -->
-
-<!-- <form action = "/prefs">
-<button>Change your preferences!</button>
-</form> -->
-
-<!-- <form action = "/prefs">
-<button>Change your preferences!</button>
-</form> -->
-=======
->>>>>>> a17c0070fe398969a8c49087a8362acfbca3f2a6
 </body>
 </html>
 
@@ -77,8 +52,6 @@
 It's not integrated with main.py yet
 But hopefully it will be soon! -->
 
-<!-- <h2 id="forms_header"> tell us about yourself.</h2> -->
-<br>
       <!-- {% if image_profile is defined %}
       <img src={{image_profile}} />
       {% endif %}
