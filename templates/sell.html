@@ -14,37 +14,33 @@
 <!--   Form
     The ISBN will have been gotten from main, and the API call already made. So now we auto-populate
     the following fields. -->
-
+    <div class = "start">
     <form action = "/sell">
-      <!-- While we could just not take in these fields...
-      We can either have these just for show... or use this html
-      to send the info between pages, in a sense -->
-      <input type="text" name="isbn" placeholder="ISBN" id="isbn">
-      <input id="title" > Title
-      <input id="author" > Author
-      <input id="edition"> Edition
-      <!-- Should be a drop-down, where it returns numbers depending on what is given -->
-
-      <h3 id="condition">Condition</h3>
-          <div>
-            <input type="checkbox" value=3>Great!<br>
-            <input type="checkbox" value=2>Good<br>
-            <input type="checkbox" value=1>Poor<br>
-          </div>
-
-      <input id="price"> Price
+      <div class="input">
+        <br>
+        <p id="words">Please enter the following fields:</p>
+        <input type="text" name="isbn" placeholder="ISBN" id="isbn"><br>
+        <br>
+        <input id="title" placeholder="Title"><br>
+        <br>
+        <input id="author" placeholder="Author"><br>
+        <br>
+        <input id="edition" placeholder="Edition"><br>
+        <br>
+        <input id="price" placeholder="Price"><br>
+      </div>
     </form>
 
     <!-- I commented out the django 'if' statements
     I'm not sure if we need them -->
     <!-- {% if image_profile is defined %} -->
-      <img src={{image_profile}} />
       <!-- {% endif %} -->
       <form action="/img" enctype="multipart/form-data" method="post">
-        <h3>Profile Picture</h3>
-        <input id="picture" name="image" type="file" accept="image/*" >
-        <input type="submit" value="upload">
+        <br>
+        <p id="morewords">Please upload a picture of your textbook.<p>
+        <input id="picture" name="image" type="file" accept="image/*" ><input type="submit" value="Upload">
       </form>
+    </div>
 
 </body>
 </html>

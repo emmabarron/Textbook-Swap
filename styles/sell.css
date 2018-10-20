@@ -1,3 +1,10 @@
+@font-face {
+  font-family: airbnb;
+  src: url(../images/AirbnbCereal-Book.ttf) format("truetype");
+}
+body {
+  font-family: airbnb;
+}
  html {
 
   align-content: center;
@@ -10,6 +17,8 @@
   margin: 20px;
   border-color: #333;
   opacity: 0.75;
+  font: airbnb;
+  background-color: #0588ad;
 }
  /* body {
     background-image:url('../images/smashbrosstart.gif');
@@ -36,12 +45,12 @@ div.start{
   min-height: 100%;
   margin: auto;
   text-align: center;
-  background-color: #ededed;
-  width: 80%;
-  height:1000px;
+  background-color: white;
+  width: 75%;
+  height:500px;
   padding: 0px;
   border-color: #333;
-  opacity: 0.75;
+  opacity: 1;
 }
 .mdl-layout__content {
 
@@ -61,18 +70,19 @@ div.start{
   text-align: center;
 }
 
-#isbn {
-  order: 1;
+#isbn, #title, #author, #edition, #price, #words, #morewords {
   border-color: #ff5a60;
-  background-color: white;
   color: #ff5a60;
   font-size: 20px;
+  font: airbnb;
 }
 
 ::placeholder {
+  order: 0;
+  border-color: #ff5a60;
   color: #ff5a60;
   font-size: 20px;
-  opacity: 0.5;
+  font-family: airbnb;
 }
 div.mdl-layout__drawer-button {
   /* This background is dark, so we set text to white. Use 87% black instead if
