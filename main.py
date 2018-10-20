@@ -32,7 +32,7 @@ def get_logged_in_user(request_handler):
             'log_in_url' : users.create_login_url('/')
         }
         # put that Google log-in link on the page and get them in!
-        log_in_template = jinja_current_directory.get_template('templates/login-page.html')
+        log_in_template = jinja_env.get_template('templates/login-page.html')
         request_handler.response.write(log_in_template.render(dict))
         print 'transaction halted because user is not logged in'
         return None
@@ -41,7 +41,7 @@ def get_logged_in_user(request_handler):
     # now let's make sure that user has been logged into our site
     # aka do we have their Google ID in OUR model (which is called User)?
     # user (appengine) vs User (our own Model). Definitely not confusing
-    existing_user = User.get_by_id(user.user_id())
+    existing_user = UserInfo.get_by_id(user.user_id())
 
     # if this person is not a user in our database, throw an error
     if not existing_user:
@@ -57,34 +57,85 @@ class GreetingsPage(webapp2.RequestHandler):
     def get(self):
         home_template = jinja_env.get_template("templates/main.html")
         self.response.write(home_template.render()) # Home Page
-        print api.get_book(self, 1521919208)
 
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
-        self.response.write(sell_template.render())
+        
+        # show current books the user is currently trying to sell
+        # also shows what the user has sold
+        current_user = get_logged_in_user(self)
+        sell_page_dict = {}
+        if current_user.selling:
+            sell_page_dict['selling'] = current_user.selling
+        if current_user.sold:
+            sell_page_dict['sold'] = current_user.sold
 
-class BuyPage(webapp2.RequestHandler):
-    def get(self):
-        buy_template = jinja_env.get_template("templates/buy.html")
+        self.response.write(sell_template.render(sell_page_dict))
+
+        # Ideally, users choose to add or remove a book to sell
+        # If removing, <some functionality>
+        # If adding, some way to autopopulate title, author, and edition boxes!
+        
+    def post(self):
+        condition = self.request.get("condition")
+        price = self.request.get("price")
+
+        # upload photo
+        # submit and save to database
+        our_user = get_logged_in_user(self)
+
+        # make a new book object
+        new_book = Book(
+            isbn = self.request.get("isbn"),
+            # run the API to auto-fill the other spaces in the form
+            # that would be json, pretty sure
+            condition = self.request.get("condition"),
+            is_selling = True,
+            image_model = 1)
+
+        # add the book to the user's selling list
+        new_book.put()
+        # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
+        our_user.selling.append(new_book)
+
+        # When the user submits, we'll have the page redirect?
+        # Emma can't remember the control flow here - Shruthi!
+
+# Emma thinks it's done, just make sure the html lines up with this!
+class ResultsPage(webapp2.RequestHandler):
+    def post(self):
+        current_user = get_logged_in_user(self)
+        buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
 
-        # pretty sure I pass in a dictionary through the render()
-        self.response.write(buy_template.render())
+        # books that the user has bought
+        if current_user.bought:
+            buy_page_dict['bought'] = current_user.bought
 
-class ResultsPage(webapp2.RequestHandler):
-    def get(self):
-        try:
-            results_page = jinja_env.get_template("templates/main.html")
-            self.response.write(results_page.render())
-        except Exception as e:
-            print e
-            self.redirect("/")
+        this_book_isbn = self.request.get('isbn')
+        # the user's isbn input
+
+        # hopefully this will return a list in condition order
+        # I can change out what the .order() is with String.format?!
+
+        # how we're sorting the order
+        # "condition"     condition ascending
+        # "-condition"    condition descending
+        # "price"         price ascending
+        # "-price"        price descending
+        sort_order = self.request.get('how_to_sort')
+
+        q = db.Query(Book)
+        book_matches = q.filter('selling', True).filter('isbn=', this_book_isbn).order(sort_order).fetch()
+        buy_page_dict['book_matches'] = book_matches
+
+        self.response.write(buy_template.render(buy_page_dict))
 
 class ImagePage(webapp2.RequestHandler):
     def get(self):
         # to do this, we need to have a "/img?id=" + str(img_id)
-        # the self.request.get('id') works fro stuff after ?
+        # the self.request.get('id') works for stuff after ?
         img_id = self.request.get('id')
 
         if not img_id:
@@ -99,11 +150,6 @@ class ImagePage(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'image/jpeg'
         self.response.out.write(some_img)
 
-        # send it back to the page!
-        # OMG if this works I can use it in my peoples page too!?!
-        # like, I could send the image in binary over? Or I could have each user call this method?
-        # they each have their own image IDs
-        # and then that ID can be used to build like a dictionary? (Or will that mess it up)
     def post(self):
         avatar = self.request.get('image')
 
@@ -114,7 +160,7 @@ class ImagePage(webapp2.RequestHandler):
         img_id = this_image.put()
         current_user.image_model = img_id
         current_user.put()
-        self.redirect('/info_update')
+        self.redirect('/sell')
 
 class TestPage(webapp2.RequestHandler):
     def get(self):
@@ -124,7 +170,6 @@ class TestPage(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', GreetingsPage),
     ('/sell', SellPage),
-    ('/buy', BuyPage),
     ('/results', ResultsPage),
     ('/img', ImagePage),
     ('/test', TestPage),

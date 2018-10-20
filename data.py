@@ -6,9 +6,10 @@ class Image(ndb.Model):
 class Book(ndb.Model):
     isbn = ndb.IntegerProperty(required=True)
     condition = ndb.IntegerProperty(required=True)
-    title = ndb.StringProperty(required=True)
+    title = ndb.StringProperty()
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
+    is_selling = ndb.BooleanProperty()
     image_model = ndb.KeyProperty(kind=Image)
 
 class UserInfo(ndb.Model):
@@ -22,4 +23,4 @@ class UserInfo(ndb.Model):
     # these will make arrays of book objects
     bought = ndb.StructuredProperty(Book, repeated=True)
     sold = ndb.StructuredProperty(Book, repeated=True)
-    current = ndb.StructuredProperty(Book, repeated=True)
+    selling = ndb.StructuredProperty(Book, repeated=True)
