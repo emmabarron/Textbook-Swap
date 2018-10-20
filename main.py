@@ -29,7 +29,43 @@ class ResultsPage(webapp2.RequestHandler):
             print e
             self.redirect("/")
 
+class ImagePage(webapp2.RequestHandler):
+    def get(self):
+        # to do this, we need to have a "/img?id=" + str(img_id)
+        # the self.request.get('id') works fro stuff after ?
+        img_id = self.request.get('id')
+
+        if not img_id:
+            return self.error(400)
+        img_item = Image.get_by_id(long(img_id))
+
+        if not img_item:
+            return self.error(404)
+        img_in_binary = images.Image(img_item.image)
+        img_in_binary.resize(200, 200)
+        some_img = img_in_binary.execute_transforms(output_encoding=images.JPEG)
+        self.response.headers['Content-Type'] = 'image/jpeg'
+        self.response.out.write(some_img)
+
+        # send it back to the page!
+        # OMG if this works I can use it in my peoples page too!?!
+        # like, I could send the image in binary over? Or I could have each user call this method?
+        # they each have their own image IDs
+        # and then that ID can be used to build like a dictionary? (Or will that mess it up)
+    def post(self):
+        avatar = self.request.get('image')
+
+        avatar = images.resize(avatar, 500, 500)
+        current_user = get_logged_in_user(self)
+
+        this_image = Image(image=avatar)
+        img_id = this_image.put()
+        current_user.image_model = img_id
+        current_user.put()
+        self.redirect('/info_update')
+
 app = webapp2.WSGIApplication([
     ('/', GreetingsPage),
-    ('/results', ResultsPage)
+    ('/results', ResultsPage),
+    ('/img', ImagePage)
 ], debug=True)

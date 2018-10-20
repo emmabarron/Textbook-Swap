@@ -1,0 +1,13 @@
+<!-- The form to get an image uploaded
+It's not integrated with main.py yet
+But hopefully it will be soon! -->
+
+<h2 id="forms_header"> tell us about yourself.</h2><br>
+      {% if image_profile is defined %}
+      <img src={{image_profile}} />
+      {% endif %}
+      <form action="/img" enctype="multipart/form-data" method="post">
+        <h3>Profile Picture</h3>
+        <input id="picture" name="image" type="file" accept="image/*" >
+        <input type="submit" value="upload">
+      </form>

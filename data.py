@@ -1,11 +1,15 @@
 from google.appengine.ext import ndb
 
+class Image(ndb.Model):
+    image = ndb.BlobProperty()
+
 class Book(ndb.Model):
     isbn = ndb.IntegerProperty(required=True)
     condition = ndb.IntegerProperty(required=True)
     title = ndb.StringProperty(required=True)
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
+    image_model = ndb.KeyProperty(kind=Image)
 
 class UserInfo(ndb.Model):
     # nice goal - could make these not required
