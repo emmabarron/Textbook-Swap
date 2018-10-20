@@ -8,10 +8,13 @@ class Book(ndb.Model):
     edition = ndb.IntegerProperty()
 
 class UserInfo(ndb.Model):
+    # nice goal - could make these not required
+    # then if someone doesn't give a name, we use
+    # the gmail's name
     firstName = ndb.StringProperty(required=True)
     lastName = ndb.StringProperty(required=True)
 
-    #stretch goal stuff
+    # stretch goal stuff
     # these will make arrays of book objects
     bought = ndb.StructuredProperty(Book, repeated=True)
     sold = ndb.StructuredProperty(Book, repeated=True)
