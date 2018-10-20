@@ -62,10 +62,7 @@ class LoginPage(webapp2.RequestHandler):
         def get(self):
         login_template = \
                 jinja_current_directory.get_template('templates/login-page.html')
-        people_template = jinja_current_directory.get_template('templates/people-page.html')
-        home_template = jinja_current_directory.get_template('templates/home-page.html')
         login_dict = {}
-        name = ""
         user = users.get_current_user()
 
         # if the user is logged with Google
