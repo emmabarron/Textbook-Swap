@@ -47,6 +47,8 @@
         <p class="chartext" id="charline1"><b><i>{{book.title}}</i></b></p>
         <p class="chartext" id="price"><b>${{book.price}}</b></p>
         <p class="chartext" id="charline2"><b>Condition:</b> {{book.condition}}</p>
+        <!-- We talked about hiding the email... so here's how we get it - y'all figure out how to hide it best -->
+        <p>{{book.owner.get().email}}</p>
         <button id="onlybutton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect savebutton" name="savebutton">See more</button><br>
       </div>
     {% endfor %}

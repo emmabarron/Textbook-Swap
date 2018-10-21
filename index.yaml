@@ -11,9 +11,20 @@ indexes:
   - name: "is_selling"
   - name: "isbn"
   - name: "price"
+    direction: desc
 - kind: "Book"
   properties:
   - name: "is_selling"
   - name: "isbn"
   - name: "price"
+- kind: "Book"
+  properties:
+  - name: "is_selling"
+  - name: "isbn"
+  - name: "condition"
+- kind: "Book"
+  properties:
+  - name: "is_selling"
+  - name: "isbn"
+  - name: "condition"
     direction: desc

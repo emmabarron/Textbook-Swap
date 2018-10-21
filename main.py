@@ -17,7 +17,21 @@ jinja_env = jinja2.Environment(
     autoescape = True,
 )
 
-# gets current logged-in user
+# def go_to_login_page(request_handler):
+#     # gets current user via a method defined in google app engine
+#     user = users.get_current_user()
+
+#     # if this user doesn't exist (aka no one is signed into Google)
+#     if not user:
+#         # send them to Google log-in url
+#         dict = {
+#             'log_in_url' : users.create_login_url('/')
+#         }
+#         # put that Google log-in link on the page and get them in!
+#         return users.create_login_url('/')
+#     return "/login"
+
+# # gets current logged-in user
 # so it is easy to access their data on each new page
 # request_handler is key for self, but since this method isn't in a class
 # that makes it very hard to call self xD
@@ -27,13 +41,13 @@ def get_logged_in_user(request_handler):
 
     # if this user doesn't exist (aka no one is signed into Google)
     if not user:
-        # send them to Google log-in url
-        dict = {
-            'log_in_url' : users.create_login_url('/')
-        }
-        # put that Google log-in link on the page and get them in!
-        log_in_template = jinja_env.get_template('templates/login.html')
-        request_handler.response.write(log_in_template.render(dict))
+        # # send them to Google log-in url
+        # dict = {
+        #     'log_in_url' : users.create_login_url('/')
+        # }
+        # # put that Google log-in link on the page and get them in!
+        # log_in_template = jinja_env.get_template('templates/login.html')
+        # request_handler.response.write(log_in_template.render(dict))
         print 'transaction halted because user is not logged in'
         return None
 
@@ -56,7 +70,18 @@ def get_logged_in_user(request_handler):
 class GreetingsPage(webapp2.RequestHandler):
     def get(self):
         home_template = jinja_env.get_template("templates/main.html")
-        self.response.write(home_template.render()) # Home Page
+        current_user = get_logged_in_user(self)
+        logdict = {}
+        if current_user:
+            logdict['logout'] = users.create_logout_url('/')
+            logdict['logout_text'] = "Logout"
+        # else:
+        #     login = go_to_login_page(self)
+        #     if login == "/login":
+        #         response.write("<button href=\'/login\'> Login </button>")
+        #     else:
+        #         self.response.write("<button href=\'" + login + "\'> Login </button>")
+        self.response.write(home_template.render(logdict)) # Home Page
 
 # make a log-in page
 class LoginPage(webapp2.RequestHandler):
@@ -142,7 +167,7 @@ class SellPage(webapp2.RequestHandler):
         elif condition_num == 3:
             condition = "Good"
         elif condition_num == 2:
-            condition = Fair
+            condition = "Fair"
 
         # upload photo
         # submit and save to database
@@ -162,6 +187,7 @@ class SellPage(webapp2.RequestHandler):
             author = authors,
             price = price,
             edition = edition,
+            owner = our_user.put(),
             is_selling = True)
         new_book.put()
 
