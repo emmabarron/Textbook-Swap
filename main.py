@@ -17,19 +17,19 @@ jinja_env = jinja2.Environment(
     autoescape = True,
 )
 
-# def go_to_login_page(request_handler):
-#     # gets current user via a method defined in google app engine
-#     user = users.get_current_user()
+def go_to_login_page(request_handler):
+    # gets current user via a method defined in google app engine
+    user = users.get_current_user()
 
-#     # if this user doesn't exist (aka no one is signed into Google)
-#     if not user:
-#         # send them to Google log-in url
-#         dict = {
-#             'log_in_url' : users.create_login_url('/')
-#         }
-#         # put that Google log-in link on the page and get them in!
-#         return users.create_login_url('/')
-#     return "/login"
+    # if this user doesn't exist (aka no one is signed into Google)
+    if not user:
+        # send them to Google log-in url
+        dict = {
+            'log_in_url' : users.create_login_url('/')
+        }
+        # put that Google log-in link on the page and get them in!
+        return users.create_login_url('/')
+    return "/login"
 
 # # gets current logged-in user
 # so it is easy to access their data on each new page
@@ -73,14 +73,15 @@ class GreetingsPage(webapp2.RequestHandler):
         current_user = get_logged_in_user(self)
         logdict = {}
         if current_user:
-            logdict['logout'] = users.create_logout_url('/')
-            logdict['logout_text'] = "Logout"
-        # else:
-        #     login = go_to_login_page(self)
-        #     if login == "/login":
-        #         response.write("<button href=\'/login\'> Login </button>")
-        #     else:
-        #         self.response.write("<button href=\'" + login + "\'> Login </button>")
+            logdict['link'] = users.create_logout_url('/')
+            logdict['text'] = "Logout"
+        else:
+            login = go_to_login_page(self)
+            logdict['text'] = "Login"
+            if login == "/login":
+                logdict['link'] = "/login"
+            else:
+                logdict['link'] = login
         self.response.write(home_template.render(logdict)) # Home Page
 
 # make a log-in page
