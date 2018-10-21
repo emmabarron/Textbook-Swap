@@ -120,23 +120,9 @@ class LoginPage(webapp2.RequestHandler):
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
-        sell_page_dict = {}
-        
-        # show current books the user is currently trying to sell
-        # also shows what the user has sold
-
-        # THIS CODE IS THROWING ERROS
-        # WHEN TESTING, CURRENT_USER IS NOT INSTANTIATED
-        # Because the user is not logged in... to the google database OOF
-        # fixed, just need a button that redirects to the login page!
         current_user = get_logged_in_user(self)
-
         if current_user is None:
             self.redirect('/login')
-
-        # sell_page_dict['selling'] = current_user.selling
-        # sell_page_dict['sold'] = current_user.sold
-
         self.response.write(sell_template.render(sell_page_dict))
 
         # Ideally, users choose to add or remove a book to sell
@@ -145,13 +131,13 @@ class SellPage(webapp2.RequestHandler):
         
     def post(self):
         condition = self.request.get("condition")
-        isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
+        this_isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
         price = float(self.request.get("price")) # ^ but with float()
 
         # upload photo
         # submit and save to database
         our_user = get_logged_in_user(self)
-        book_json = api.get_book(isbn) # Needs to throw an error if it returns empty
+        book_json = api.get_book(this_isbn) # Needs to throw an error if it returns empty
         authors = book_json["volumeInfo"]["authors"]
 
         if len(authors) > 1:
@@ -161,16 +147,12 @@ class SellPage(webapp2.RequestHandler):
 
         # make a new book object
         new_book = Book(
-            isbn = isbn,
-            # run the API to auto-fill the other spaces in the form
-            # that would be json, pretty sure
-            # ^^ you were right
+            isbn = this_isbn,
             title = book_json["volumeInfo"]["title"],
             author = authors,
             condition = condition,
             is_selling = True,
             price = price,
-            image_model = 1 # this needs help
         )
 
         # add the book to the user's selling list

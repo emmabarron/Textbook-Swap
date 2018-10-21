@@ -22,6 +22,6 @@ class UserInfo(ndb.Model):
 
     # stretch goal stuff
     # these will make arrays of book objects
-    bought = ndb.StructuredProperty(Book, repeated=True)
-    sold = ndb.StructuredProperty(Book, repeated=True)
-    selling = ndb.StructuredProperty(Book, repeated=True)
+    # bought = ndb.StructuredProperty(Book, repeated=True)
+    # sold = ndb.StructuredProperty(Book, repeated=True)
+    # selling = ndb.StructuredProperty(Book, repeated=True)
