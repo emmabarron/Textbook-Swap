@@ -217,26 +217,39 @@ class ImagePage(webapp2.RequestHandler):
 
         if not img_id:
             return self.error(400)
+        # gets our data version of image by the image id (which comes from the url)
         img_item = Image.get_by_id(long(img_id))
 
         if not img_item:
             return self.error(404)
+        # converts our version of image into one in the app engine images
         img_in_binary = images.Image(img_item.image)
+        # uses Google app engine to resize the binary representation of the image
         img_in_binary.resize(200, 200)
+        # this one rewrites the image into jpeg and then assumes the rest is jpeg too?
+        # do I even need to do that?
         some_img = img_in_binary.execute_transforms(output_encoding=images.JPEG)
         self.response.headers['Content-Type'] = 'image/jpeg'
         self.response.out.write(some_img)
 
     def post(self):
-        avatar = self.request.get('image')
+        # get the user's input and store it in avatar
+        # probably in blob form?
+        avatar = self.request.get('picture')
 
+        # use google app engine resize
         avatar = images.resize(avatar, 500, 500)
         current_user = get_logged_in_user(self)
 
+        # turn our app engine image into one for our database
         this_image = Image(image=avatar)
+        # get the image id from our putting it
         img_id = this_image.put()
+        # then assign that key to the current_user.image_model
         current_user.image_model = img_id
+        # now save that key, too
         current_user.put()
+        # redirect to sell? Is that where we really want to go?
         self.redirect('/sell')
 
 class TestPage(webapp2.RequestHandler):
