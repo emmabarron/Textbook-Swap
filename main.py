@@ -173,13 +173,13 @@ class SellPage(webapp2.RequestHandler):
         # upload photo
         # submit and save to database
         our_user = get_logged_in_user(self)
-        # book_json = api.get_book(self, this_isbn) # Needs to throw an error if it returns empty
-        # authors = book_json["volumeInfo"]["authors"]
+        book_json = api.get_book(self, this_isbn) # Needs to throw an error if it returns empty
+        authors = book_json["volumeInfo"]["authors"]
 
-        # if len(authors) > 1:
-        #     authors = ", ".join(authors)
-        # else:
-        #     authors = authors[0]
+        if len(authors) > 1:
+            authors = ", ".join(authors)
+        else:
+            authors = authors[0]
 
         # make a new book object
         new_book = Book(isbn = this_isbn, condition = condition,
