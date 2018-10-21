@@ -58,6 +58,7 @@ class GreetingsPage(webapp2.RequestHandler):
         home_template = jinja_env.get_template("templates/main.html")
         self.response.write(home_template.render()) # Home Page
 
+# make a log-in page
 class LoginPage(webapp2.RequestHandler):
     def get(self):
         login_template = jinja_env.get_template('templates/login.html')
@@ -117,6 +118,7 @@ class LoginPage(webapp2.RequestHandler):
 
         self.redirect('/sell')
 
+# upload photos
 class SellPage(webapp2.RequestHandler):
     def get(self):
         sell_template = jinja_env.get_template("templates/sell.html")
@@ -165,17 +167,15 @@ class SellPage(webapp2.RequestHandler):
 
         self.redirect('/')
 
-# sort the books! (you did this for people...)
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))
         book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).fetch()
-        buy_page_dict['book_matches'] = book_matches
-
         if len(book_matches) <= 5:
             buy_page_dict['few_books'] = "I'm sorry, we don't seem to have many books with ISBN " + str(this_book_isbn) + ". We recommend trying other sites."
+        buy_page_dict['book_matches'] = book_matches
 
         self.response.write(buy_template.render(buy_page_dict))
 
@@ -183,11 +183,7 @@ class ResultsPage(webapp2.RequestHandler):
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))
-
         recieved_sort = self.request.get('sort_order')
-
-        # These are not sorting
-        # UUUUGGGGHHHH
         if recieved_sort == "0":
             book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(Book.price).fetch()
         elif recieved_sort == "1":
@@ -203,6 +199,7 @@ class ResultsPage(webapp2.RequestHandler):
         buy_page_dict['book_matches'] = book_matches
         self.response.write(buy_template.render(buy_page_dict))
 
+# get to upload photos!
 class ImagePage(webapp2.RequestHandler):
     def get(self):
         # to do this, we need to have a "/img?id=" + str(img_id)
