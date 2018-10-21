@@ -106,7 +106,7 @@ class LoginPage(webapp2.RequestHandler):
             # You shouldn't be able to get here without being logged in to Google
             self.error(404)
             return
-        our_user = User(
+        our_user = UserInfo(
             email=user.nickname(),     # current user's email
             id=user.user_id(),         # current user's ID number
             name=self.request.get("first_name") + " " + self.request.get("last_name")
@@ -131,6 +131,9 @@ class SellPage(webapp2.RequestHandler):
         # Because the user is not logged in... to the google database OOF
         # fixed, just need a button that redirects to the login page!
         current_user = get_logged_in_user(self)
+
+        if current_user is None:
+            self.redirect('/login')
 
         # sell_page_dict['selling'] = current_user.selling
         # sell_page_dict['sold'] = current_user.sold
@@ -185,28 +188,30 @@ class ResultsPage(webapp2.RequestHandler):
         # current_user = get_logged_in_user(self)
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
+        this_book_isbn = int(self.request.get('isbn'))
+        self.response.write(buy_template.render(buy_page_dict))
 
         # books that the user has bought
         # if current_user.bought:
         #     buy_page_dict['bought'] = current_user.bought
 
-        this_book_isbn = self.request.get('isbn')
+    def post(self):
+        buy_template = jinja_env.get_template("templates/results.html")
+        buy_page_dict = {}
+        this_book_isbn = int(self.request.get('isbn'))
 
-        # the user's isbn input
-
-        # hopefully this will return a list in condition order
-        # I can change out what the .order() is with String.format?!
-
-        # how we're sorting the order
-        # "condition"     condition ascending
-        # "-condition"    condition descending
-        # "price"         price ascending
-        # "-price"        price descending
-        sort_order = self.request.get('how_to_sort')
+        recieved_sort = self.request.get('sort_order')
+        if recieved_sort == 0:
+            sort_order = Book.price
+        elif recieved_sort == 1:
+            sort_order = -Book.price
+        elif recieved_sort == 2:
+            sort_order = -Book.condition
+        else:
+            sort_order = Book.isbn
 
         book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(sort_order).fetch()
         buy_page_dict['book_matches'] = book_matches
-
         self.response.write(buy_template.render(buy_page_dict))
 
 class ImagePage(webapp2.RequestHandler):

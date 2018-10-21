@@ -11,9 +11,6 @@
   <link rel ="stylesheet" href="styles/sell.css">
 </head>
 <body>
-<!--   Form
-    The ISBN will have been gotten from main, and the API call already made. So now we auto-populate
-    the following fields. -->
     <div class = "start">
     <form action = "/sell">
       <div class="input">
@@ -40,30 +37,14 @@
       </div>
     </form>
 
-    <!-- I commented out the django 'if' statements
-    I'm not sure if we need them -->
-    <!-- {% if image_profile is defined %} -->
-      <!-- {% endif %} -->
       <form action="/img" enctype="multipart/form-data" method="post">
         <br>
         <p id="morewords">Please upload a picture of your textbook.</p>
-        <input id="picture" name="image" type="file" accept="image/*" ><input type="submit" value="Upload">
+        <input id="picture" name="image" type="file" accept="image/*" >
+        <input type="submit" value="Upload">
       </form>
       <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Submit</button><br>
     </div>
 
 </body>
 </html>
-
-<!-- The form to get an image uploaded
-It's not integrated with main.py yet
-But hopefully it will be soon! -->
-
-      <!-- {% if image_profile is defined %}
-      <img src={{image_profile}} />
-      {% endif %}
-      <form action="/img" enctype="multipart/form-data" method="post">
-        <h3>Profile Picture</h3>
-        <input id="picture" name="image" type="file" accept="image/*" >
-        <input type="submit" value="upload">
-      </form> -->

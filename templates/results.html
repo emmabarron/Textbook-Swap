@@ -24,16 +24,16 @@
   <!-- A workig menu -->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <form  method = "post" action="/prefs?type=show">
+    <form  method = "post" action="" id="sort_order">
       <div class="selectors">
         <div class="question">
           <h6 id="andy">Filter your results by:</h6>
           <select  name="skill" id="andy2">
-            <option   value="5">Price: low-high</option>
-            <option   value="4">Price: high-low</option>
-            <option   value="3">Newest first</option>
-            <option   value="2">Oldest first</option>
-            <option   value="1">Condition: best-worst</option>
+            <option   value=0>Price: low-high</option>
+            <option   value=1>Price: high-low</option>
+<!--        <option   value="3">Newest first</option>
+            <option   value="2">Oldest first</option> -->
+            <option   value=2>Condition: best-worst</option>
           </select>
         </div>
       </div>
