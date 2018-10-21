@@ -42,12 +42,12 @@ form{
 div.start{
   display: block;
   align-content: center;
-  min-height: 100%;
+
   margin: auto;
   text-align: center;
   background-color: white;
   width: 75%;
-  height:500px;
+  height:520px;
   padding: 0px;
   border-color: #333;
   opacity: 1;
