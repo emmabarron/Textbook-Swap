@@ -18,7 +18,6 @@ class UserInfo(ndb.Model):
     # then if someone doesn't give a name, we use
     # the gmail's name
     email = ndb.StringProperty(required=True)
-    id = ndb.IntegerProperty(required=True)
     name = ndb.StringProperty(required=True)
 
     # stretch goal stuff

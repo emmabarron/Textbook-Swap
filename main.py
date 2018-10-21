@@ -112,11 +112,10 @@ class LoginPage(webapp2.RequestHandler):
             name=self.request.get("first_name") + " " + self.request.get("last_name")
             )
         our_user.put()
-        wel_dict = {'welcome': 'Thanks for signing up, %s!' %
-            our_user.name}
+        # wel_dict = {'welcome': 'Thanks for signing up, %s!' %
+        #     our_user.name}
 
-        home_template = jinja_current_directory.get_template('templates/home-page.html')
-        self.response.write(home_template.render(wel_dict))
+        self.redirect('/sell')
 
 class SellPage(webapp2.RequestHandler):
     def get(self):
@@ -213,6 +212,12 @@ class ResultsPage(webapp2.RequestHandler):
             sort_order = Book.isbn
 
         book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(sort_order).fetch()
+
+        if len(book_matches) == 0:
+            buy_page_dict['no_books'] = "I'm sorry, we have no books. We recommend looking on Amazon."
+        elif len(book_matches) == 5:
+            buy_page_dict['few_books'] = "I'm sorry, we don't seem to have many options for you. We recommend trying Amazon, too."
+
         buy_page_dict['book_matches'] = book_matches
         self.response.write(buy_template.render(buy_page_dict))
 
