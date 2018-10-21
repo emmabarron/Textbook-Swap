@@ -196,6 +196,8 @@ class ResultsPage(webapp2.RequestHandler):
         #     buy_page_dict['bought'] = current_user.bought
 
     def post(self):
+        # PROBLEM. There ARE no results.
+        # If that's the case, write "There are none of these textbooks for sale - try amazon / ebay / etc and include those links"
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))
