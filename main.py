@@ -124,13 +124,14 @@ class SellPage(webapp2.RequestHandler):
         if current_user is None:
             self.redirect('/login')
         self.response.write(sell_template.render())
-
-        # Ideally, users choose to add or remove a book to sell
-        # If removing, <some functionality>
-        # If adding, some way to autopopulate title, author, and edition boxes!
-        
     def post(self):
-        condition_num = self.request.get("condition")
+        this_isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
+        price = float(self.request.get("price")) # ^ but with float()
+        authors = self.request.get("author")
+        title = self.request.get("title")
+        edition = int(self.request.get("edition"))
+
+        condition_num = int(self.request.get("condition"))
         condition = "Poor"
         if condition_num == 5:
             condition = "Like new"
@@ -141,40 +142,30 @@ class SellPage(webapp2.RequestHandler):
         elif condition_num == 2:
             condition = Fair
 
-        this_isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
-        price = float(self.request.get("price")) # ^ but with float()
-
         # upload photo
         # submit and save to database
         our_user = get_logged_in_user(self)
-        book_json = api.get_book(this_isbn) # Needs to throw an error if it returns empty
-        authors = book_json["volumeInfo"]["authors"]
+        # book_json = api.get_book(self, this_isbn) # Needs to throw an error if it returns empty
+        # authors = book_json["volumeInfo"]["authors"]
 
-        if len(authors) > 1:
-            authors = ", ".join(authors)
-        else:
-            authors = authors[0]
+        # if len(authors) > 1:
+        #     authors = ", ".join(authors)
+        # else:
+        #     authors = authors[0]
 
         # make a new book object
-        new_book = Book(
-            isbn = this_isbn,
-            title = book_json["volumeInfo"]["title"],
-            author = authors,
-            condition = condition,
+        new_book = Book(isbn = this_isbn, condition = condition,
             condition_num = condition_num,
-            is_selling = True,
+            title = title, #book_json["volumeInfo"]["title"],
+            author = authors,
             price = price,
-        )
-
-        # add the book to the user's selling list
+            edition = edition,
+            is_selling = True)
         new_book.put()
-        # This below is BS. idk how to add a new object to the StructuredProperty(Book, repeated = True)
-        our_user.selling.append(new_book)
 
-        # When the user submits, we'll have the page redirect?
-        # Emma can't remember the control flow here - Shruthi!
-        # self.redirect("/profile")
+        self.redirect('/')
 
+# sort the books! (you did this for people...)
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
         buy_template = jinja_env.get_template("templates/results.html")
@@ -195,6 +186,8 @@ class ResultsPage(webapp2.RequestHandler):
 
         recieved_sort = self.request.get('sort_order')
 
+        # These are not sorting
+        # UUUUGGGGHHHH
         if recieved_sort == "0":
             book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(Book.price).fetch()
         elif recieved_sort == "1":

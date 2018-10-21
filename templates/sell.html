@@ -11,30 +11,34 @@
   <link rel ="stylesheet" href="styles/sell.css">
 </head>
 <body>
+  <div class = "buttons">
+    <a class="navbutton" href='/'>Home</a>
+  </div>
     <div class = "start">
-    <form action = "/sell">
+    <form action = "/sell" method="post">
       <div class="input">
         <br>
         <p id="words">Please enter the following fields:</p>
         <input type="text" name="isbn" placeholder="ISBN" id="isbn"><br>
         <br>
-        <input id="title" placeholder="Title"><br>
+        <input id="title" name = "title" placeholder="Title"><br>
         <br>
-        <input id="author" placeholder="Author"><br>
+        <input id="author" name="author" placeholder="Author"><br>
         <br>
-        <input id="edition" placeholder="Edition"><br>
+        <input id="edition" name="edition" placeholder="Edition"><br>
         <br>
-        <input id="price" placeholder="Price"><br>
+        <input type="number" step="0.01" name="price" placeholder="Price" id="price"><br>
         <br>
-        <p id="words2">Condition:</p>
-        <select  name="skill" id="lastwords">
-          <option   value="5">Like new</option>
-          <option   value="4">Very good</option>
-          <option   value="3">Good</option>
-          <option   value="2">Fair</option>
-          <option   value="1">Poor</option>
+        <p id="words">Condition:</p>
+        <select  name="condition" id="words2">
+          <option   value='5'>Like new</option>
+          <option   value='4'>Very good</option>
+          <option   value='3'>Good</option>
+          <option   value='2'>Fair</option>
+          <option   value='1'>Poor</option>
         </select>
       </div>
+      <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Submit</button><br>
     </form>
 
       <form action="/img" enctype="multipart/form-data" method="post">
@@ -43,7 +47,6 @@
         <input id="picture" name="image" type="file" accept="image/*" >
         <input type="submit" value="Upload">
       </form>
-      <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Submit</button><br>
     </div>
 
 </body>
