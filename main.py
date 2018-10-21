@@ -123,14 +123,24 @@ class SellPage(webapp2.RequestHandler):
         current_user = get_logged_in_user(self)
         if current_user is None:
             self.redirect('/login')
-        self.response.write(sell_template.render(sell_page_dict))
+        self.response.write(sell_template.render())
 
         # Ideally, users choose to add or remove a book to sell
         # If removing, <some functionality>
         # If adding, some way to autopopulate title, author, and edition boxes!
         
     def post(self):
-        condition = self.request.get("condition")
+        condition_num = self.request.get("condition")
+        condition = "Poor"
+        if condition_num == 5:
+            condition = "Like new"
+        elif condition_num == 4:
+            condition = "Very good"
+        elif condition_num == 3:
+            condition = "Good"
+        elif condition_num == 2:
+            condition = Fair
+            
         this_isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
         price = float(self.request.get("price")) # ^ but with float()
 
@@ -151,6 +161,7 @@ class SellPage(webapp2.RequestHandler):
             title = book_json["volumeInfo"]["title"],
             author = authors,
             condition = condition,
+            condition_num = condition_num,
             is_selling = True,
             price = price,
         )
@@ -179,6 +190,7 @@ class ResultsPage(webapp2.RequestHandler):
     def post(self):
         # PROBLEM. There ARE no results.
         # If that's the case, write "There are none of these textbooks for sale - try amazon / ebay / etc and include those links"
+        # I always want the books pulled up on this page. So... render before the sort, then after the sort
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))

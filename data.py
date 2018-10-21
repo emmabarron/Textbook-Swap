@@ -5,11 +5,12 @@ class Image(ndb.Model):
 
 class Book(ndb.Model):
     isbn = ndb.IntegerProperty(required=True)
-    condition = ndb.IntegerProperty(required=True)
+    condition = ndb.StringProperty(required=True)
+    condition_num = ndb.IntegerProperty(required=True)
     title = ndb.StringProperty()
     author = ndb.StringProperty()
     edition = ndb.IntegerProperty()
-    price = ndb.FloatProperty()
+    price = ndb.FloatProperty(required = True)
     is_selling = ndb.BooleanProperty(default=True)
     image_model = ndb.KeyProperty(kind=Image)
 
