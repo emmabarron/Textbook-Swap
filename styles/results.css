@@ -47,6 +47,13 @@ body {
   white-space: pre-wrap;
 
 }
+
+/*I'd do more css... but I don't know enough*/
+.apologies {
+  color: white;
+  text-align: center;
+}
+
 #character{
   color: black;
   display: flex;

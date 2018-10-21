@@ -140,7 +140,7 @@ class SellPage(webapp2.RequestHandler):
             condition = "Good"
         elif condition_num == 2:
             condition = Fair
-            
+
         this_isbn = int(self.request.get("isbn")) # I don't know if the int() is necessary
         price = float(self.request.get("price")) # ^ but with float()
 
@@ -177,40 +177,35 @@ class SellPage(webapp2.RequestHandler):
 
 class ResultsPage(webapp2.RequestHandler):
     def get(self):
-        # current_user = get_logged_in_user(self)
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))
+        book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).fetch()
+        buy_page_dict['book_matches'] = book_matches
+
+        if len(book_matches) <= 5:
+            buy_page_dict['few_books'] = "I'm sorry, we don't seem to have many books with ISBN " + str(this_book_isbn) + ". We recommend trying other sites."
+
         self.response.write(buy_template.render(buy_page_dict))
 
-        # books that the user has bought
-        # if current_user.bought:
-        #     buy_page_dict['bought'] = current_user.bought
-
     def post(self):
-        # PROBLEM. There ARE no results.
-        # If that's the case, write "There are none of these textbooks for sale - try amazon / ebay / etc and include those links"
-        # I always want the books pulled up on this page. So... render before the sort, then after the sort
         buy_template = jinja_env.get_template("templates/results.html")
         buy_page_dict = {}
         this_book_isbn = int(self.request.get('isbn'))
 
         recieved_sort = self.request.get('sort_order')
-        if recieved_sort == 0:
-            sort_order = Book.price
-        elif recieved_sort == 1:
-            sort_order = -Book.price
-        elif recieved_sort == 2:
-            sort_order = -Book.condition
+
+        if recieved_sort == "0":
+            book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(Book.price).fetch()
+        elif recieved_sort == "1":
+            book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(-Book.price).fetch()
+        elif recieved_sort == "2":
+            book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(-Book.condition).fetch()
         else:
-            sort_order = Book.isbn
+            book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).fetch()
 
-        book_matches = Book.query(Book.is_selling == True, Book.isbn == this_book_isbn).order(sort_order).fetch()
-
-        if len(book_matches) == 0:
-            buy_page_dict['no_books'] = "I'm sorry, we have no books. We recommend looking on Amazon."
-        elif len(book_matches) == 5:
-            buy_page_dict['few_books'] = "I'm sorry, we don't seem to have many options for you. We recommend trying Amazon, too."
+        if len(book_matches) <= 5:
+            buy_page_dict['few_books'] = "I'm sorry, we don't seem to have many books with ISBN " + str(this_book_isbn) + ". We recommend trying other sites."
 
         buy_page_dict['book_matches'] = book_matches
         self.response.write(buy_template.render(buy_page_dict))

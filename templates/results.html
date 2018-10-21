@@ -29,18 +29,17 @@
         <div class="question">
           <h6 id="andy">Filter your results by:</h6>
           <select  name="skill" id="andy2">
-            <option   value=0>Price: low-high</option>
-            <option   value=1>Price: high-low</option>
+            <option   value="0">Price: low-high</option>
+            <option   value="1">Price: high-low</option>
 <!--        <option   value="3">Newest first</option>
             <option   value="2">Oldest first</option> -->
-            <option   value=2>Condition: best-worst</option>
+            <option   value="2">Condition: best-worst</option>
           </select>
         </div>
       </div>
 
       <button id="butt" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Filter</button>
     </form>
-
 
     {% for book in book_matches %}
       <div id='character' class="">
@@ -51,6 +50,9 @@
         <button id="onlybutton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect savebutton" name="savebutton">See more</button><br>
       </div>
     {% endfor %}
+
+    <p class = "apologies"> {{few_books}} </p>
+
     <footer class="mdl-mini-footer" style="align: center" >
       <div class="mdl-mini-footer__left-section">
         <ul class="mdl-mini-footer__link-list">
