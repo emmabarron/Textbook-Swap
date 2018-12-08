@@ -1,6 +1,6 @@
 # Title of App
 
-(Title of app) is an app that allows college students to sell and buy used
+Textbook-Swap is an app that allows college students to sell and buy used
 textbooks. Users can search for or upload books via ISBN, as well as compare
 them to online prices.
 
